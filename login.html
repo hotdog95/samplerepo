@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Login Page</h1>
+        <p>Please login because...</p>
+        <!--<form action="/action" method="get">-->
+            <fieldset>
+                Username:
+                <input type="text" name="username" id="username"><br>
+                Password:
+                <input type="password" name="password" id="password" ><br><br>
+                <input type="submit" value="Login" >
+                <button onclick="sendinform()">sendinform</button>
+                <p id="error"></p>
+            </fieldset>
+        <!--</form>-->
+
+        <script>
+
+        let sendinform = () => {
+            let data = {
+                username: document.getElementById('username').value,
+                password: document.getElementById('password').value
+            };
+            console.log('sending form', data);
+
+            fetch('/action', {
+                method: 'POST',
+                headers: new Headers({"Content-Type": 'application/json'}),
+                body: JSON.stringify(data)
+            }).then(response => {
+
+                console.log('lol');
+
+                response.json().then(data => {
+                    let stat = data.status;
+
+                    if (stat == 'ok') {
+                        document.getElementById('error').innerHTML = '';
+                        window.localStorage.setItem('username', data.username);
+                        window.location.href = 'http://localhost:3002/test1';
+                        //window.location.href = 'http://stackoverflow.com';
+                    } else {
+                        document.getElementById('error').innerHTML = 'Incorrect username or password';
+                    }
+
+
+                }).catch(data => {
+                    console.log(data);
+                });
+
+            }).catch(response => {
+                console.log(response);
+            });
+
+        };
+
+        </script>
+    </body>
+</html>

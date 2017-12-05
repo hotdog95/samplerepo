@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Welcome <span id="username"></span></h1>
+        <p>This is the amazing test page of testyness</p>
+
+        <script>
+
+        document.getElementById('username').innerHTML = window.localStorage.getItem('username');
+
+        </script>
+
+    </body>
+</html>
